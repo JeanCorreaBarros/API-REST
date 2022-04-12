@@ -1,27 +1,14 @@
 ###
-GET  http://localhost:9000/api HTTP/1.1
+GET  http://localhost:9000/user HTTP/1.1
 
 
 ###
-POST http://localhost:9000/api HTTP/1.1
-content-type: application/json
-
-{
-    
-    "nombre": "Gael Correa Salcedo",
-    "rol_usuario": "1"
-}
+POST http://localhost:9000/user HTTP/1.1
 
 
 ###
-DELETE http://localhost:9000/api/5 HTTP/1.1
+DELETE http://localhost:9000/user/7 HTTP/1.1
 
 
 ###
-PUT http://localhost:9000/api/1 HTTP/1.1
-Content-Type: application/json
-
-{
-    "nombre": "mariana",
-    "rol_usuario": "26"
-}
+PUT http://localhost:9000/user/7 HTTP/1.1

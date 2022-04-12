@@ -1,36 +1,42 @@
+require("dotenv").config();
 const express = require('express');
-const mysql = require('mysql2');
-const myconn = require('express-myconnection')
+const {dbConnectMysql} = require('./config/mysql')
+const cors = require('cors');
+const bodyParser = require('body-parser')
+const cookieParser = require('cookie-parser')
+const router = require('./app/routes/index')
 
-const routes = require('./routes')
 
-
+// initial App //
 const app = express()
-app.set('port', process.env.PORT || 9000)
-const dbOptions = {
-    host: 'localhost',
-    port: 3306,
-    user:'root', 
-    password:'110621',
-    database:'genomaxmd',
-}
-
-// midedleware --------------------
- app.use(myconn(mysql, dbOptions, 'single'));
- app.use(express.json());
+const port = process.env.PORT;
 
 
 
-// routes -------------------------
 
+// midedleware //
+app.use(express.json());
+app.use(express.text());
+app.use(cors());
+app.use(cookieParser());
+app.use(bodyParser.urlencoded({limit:'20mb', extended: true }))
+app.use(bodyParser.json({limit:'20mb'}))
+
+
+
+
+// routes //
 app.get('/', (req, res) => {
-    res.send('Welcome to my API')
+    res.send('Welcome to Genomax /*** API-REST ****/ ')
+})
+app.use('/', router)
+
+
+
+//server running //
+app.listen(port,() => {
+   console.log(`Server Genomax-MD Ready in Port + ${port} `);
 })
 
-app.use('/api', routes)
 
-//server running ---------------------------
-
-app.listen(app.get('port'),()=>{
-   console.log('server running on port', app.get('port'));
-})
+dbConnectMysql();
